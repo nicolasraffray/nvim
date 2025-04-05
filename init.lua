@@ -21,6 +21,8 @@ vim.opt.breakindent = true
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
 
+-- bufferviews
+vim.opt.laststatus = 3
 
 -- Save undo history
 vim.opt.undofile = true
@@ -46,7 +48,7 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
@@ -54,6 +56,7 @@ vim.opt.scrolloff = 10
 vim.opt.confirm = true
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',
@@ -64,3 +67,58 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 require("config.lazy")
+
+vim.keymap.set("n", '<C-h>', "<cmd>:BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", '<C-l>', "<cmd>:BufferLineCycleNext<cr>", { desc = "Prev buffer" })
+
+vim.keymap.set('n', '<C-k>', function()
+  -- Get the current buffer and window numbers
+  local current_buf = vim.api.nvim_get_current_buf()
+  local current_win = vim.api.nvim_get_current_win()
+
+  -- Check for unsaved changes
+  if vim.bo[current_buf].modified then
+    print("Save changes before closing the buffer.")
+    return
+  end
+
+  -- Check if 'winfixbuf' is set for the current window
+  if vim.wo[current_win].winfixbuf then
+    -- Temporarily unset 'winfixbuf' to allow buffer switching
+    vim.cmd('q')
+  end
+
+  -- Get the list of buffers
+  local buffers = vim.fn.getbufinfo({buflisted = 1})
+  local current_index = nil
+
+  -- Find the index of the current buffer in the list
+  for i, buf in ipairs(buffers) do
+    if buf.bufnr == current_buf then
+      current_index = i
+      break
+    end
+  end
+
+  -- Determine the buffer to switch to
+  local target_buf = nil
+  if current_index then
+    if current_index == 1 and #buffers > 1 then
+      -- If on the first buffer, move to the next buffer
+      target_buf = buffers[current_index + 1].bufnr
+    elseif current_index > 1 then
+      -- Otherwise, move to the previous buffer
+      target_buf = buffers[current_index - 1].bufnr
+    end
+  end
+
+  -- Switch to the target buffer if it exists
+  if target_buf then
+    vim.api.nvim_set_current_buf(target_buf)
+    -- Delete the previous buffer
+    vim.api.nvim_buf_delete(current_buf, {})
+  else
+    vim.cmd('bd')
+    vim.cmd("Oil")
+  end
+end, { desc = 'Close current buffer and move to previous or next' })
