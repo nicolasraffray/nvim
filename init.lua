@@ -68,10 +68,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require("config.lazy")
 
-vim.keymap.set("n", '<C-h>', "<cmd>:BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-vim.keymap.set("n", '<C-l>', "<cmd>:BufferLineCycleNext<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", '<C-[>', "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", '<C-]>', "<cmd>BufferLineCycleNext<cr>", { desc = "Prev buffer" })
 
-vim.keymap.set('n', '<C-k>', function()
+vim.keymap.set('n', '<C-n>', function()
   -- Get the current buffer and window numbers
   local current_buf = vim.api.nvim_get_current_buf()
   local current_win = vim.api.nvim_get_current_win()

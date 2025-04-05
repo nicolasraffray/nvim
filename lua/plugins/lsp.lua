@@ -225,7 +225,7 @@ return {
                     enable_import_completion = true,
                     config = {},
                 },
-
+                ts_ls = {},
                 lua_ls = {
                     -- cmd = { ... },
                     -- filetypes = { ... },
