@@ -17,7 +17,13 @@ return {
             {
                 'williamboman/mason.nvim',
                 opts = {
-                    ensure_installed = { 'csharpier', 'netcoredbg' },
+                    ensure_installed = {
+                        'csharpier',
+                        'netcoredbg',
+                        'typescript',
+                        'tailwindcss-language-server',
+                        'eslint-lsp'
+                    },
                 },
             },
             {
@@ -226,7 +232,16 @@ return {
                     enable_import_completion = true,
                     config = {},
                 },
-                ts_ls = {},
+                ts_ls = {
+                    ft = {
+                        'javascript',
+                        'javascriptreact',
+                        'typescript',
+                        'typescriptreact'
+                    }
+                },
+                tailwindcss = {},
+                eslint = {},
                 lua_ls = {
                     -- cmd = { ... },
                     -- filetypes = { ... },

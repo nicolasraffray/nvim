@@ -3,7 +3,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
-vim.opt.relativenumber = true
+vim.wo.number = true
+vim.wo.relativenumber = true
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -59,19 +60,19 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
 
 require("config.lazy")
 
-vim.keymap.set("n", '<C-O>', "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-vim.keymap.set("n", '<C-P>', "<cmd>BufferLineCycleNext<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", '<S-H>', "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+vim.keymap.set("n", '<S-L>', "<cmd>BufferLineCycleNext<cr>", { desc = "Prev buffer" })
 
-vim.keymap.set('n', '<C-N>', function()
+vim.keymap.set('n', '<leader>bd', function()
   -- Get the current buffer and window numbers
   local current_buf = vim.api.nvim_get_current_buf()
   local current_win = vim.api.nvim_get_current_win()
@@ -89,7 +90,7 @@ vim.keymap.set('n', '<C-N>', function()
   end
 
   -- Get the list of buffers
-  local buffers = vim.fn.getbufinfo({buflisted = 1})
+  local buffers = vim.fn.getbufinfo({ buflisted = 1 })
   local current_index = nil
 
   -- Find the index of the current buffer in the list

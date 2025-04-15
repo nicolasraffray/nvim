@@ -17,6 +17,8 @@ return {
                 'markdown_inline',
                 'query',
                 'typescript',
+                'tsx',
+                'javascript',
                 'vim',
                 'vimdoc'
             },
