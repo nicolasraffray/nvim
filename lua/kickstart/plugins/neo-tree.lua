@@ -14,12 +14,37 @@ return {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
+    sources = {
+      'filesystem',
+      'buffers',
+      'git_status',
+      'document_symbols',
+    },
+    source_selector = {
+      winbar = true, -- toggle to show selector on winbar
+      statusline = false, -- toggle to show selector on statusline
+      show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
+      -- of the top visible node when scrolled down.
+      sources = {
+        { source = 'filesystem' },
+        { source = 'buffers' },
+        { source = 'git_status' },
+        { source = 'document_symbols' },
+      },
+    },
     filesystem = {
       window = {
+        position = 'right',
         mappings = {
           ['\\'] = 'close_window',
         },
       },
+    },
+    event_handlers = {
+      event = 'file_opened',
+      handler = function()
+        require('neo-tree.command').execute { action = 'focus' }
+      end,
     },
   },
 }
