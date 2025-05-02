@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = '/Users/nicolasraffray/Documents/Main Remote Vault',
+        path = '/Users/nicolasraffray/src/notes',
       },
     },
 
