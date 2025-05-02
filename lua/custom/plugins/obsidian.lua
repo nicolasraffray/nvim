@@ -1,5 +1,5 @@
 return {
-  'epwalsh/obsidian.nvim',
+  'obsidian-nvim/obsidian.nvim',
   version = '*', -- recommended, use latest release instead of latest commit
   lazy = true,
   ft = 'markdown',
@@ -24,7 +24,11 @@ return {
         path = '/Users/nicolasraffray/src/notes',
       },
     },
-
+    completion = {
+      blink = true,
+      nvim_cmp = false,
+      min_chars = 2,
+    },
     -- see below for full list of options 👇
     mappings = {
 
