@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = '/Users/nicolasraffray/src/notes',
+        path = '/Users/nicolasraffray/Developer/notes',
       },
     },
     completion = {
