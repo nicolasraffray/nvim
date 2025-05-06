@@ -13,8 +13,12 @@ return {
     },
   },
   {
+    'Hoffs/omnisharp-extended-lsp.nvim',
+  },
+  {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
+    version = '*',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
@@ -95,6 +99,7 @@ return {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
+
           map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
@@ -133,6 +138,11 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+          if client and client.name == 'omnisharp' then
+            map('grd', require('omnisharp_extended').telescope_lsp_definitions, '[G]oto [D]efinition')
+          end
+
           if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {

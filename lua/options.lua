@@ -68,10 +68,10 @@ vim.opt.scrolloff = 10
 vim.opt.confirm = true
 
 -- https://www.jackfranklin.co.uk/blog/code-folding-in-vim-neovim/
-vim.g.markdown_folding = 1
+-- vim.g.markdown_folding = 1
 -- vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 1
-vim.opt.foldmethod = 'expr'
+-- vim.opt.foldlevelstart = 1
+-- vim.opt.foldmethod = 'expr'
 -- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -- vim.opt.foldtext = ''
 -- vim.opt.foldnestmax = 4
