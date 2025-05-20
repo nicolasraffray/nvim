@@ -105,6 +105,14 @@ require 'lazy-bootstrap'
 -- [[ Configure and install plugins ]]
 require 'lazy-plugins'
 
+local todo_float = require 'todofloat'
+
+todo_float.setup {
+  target_file = '~/Developer/notes/todo.md',
+}
+
+vim.keymap.set('n', '<leader>td', ':Td<CR>', { silent = true })
+
 vim.diagnostic.config { virtual_text = false }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
