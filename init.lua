@@ -111,7 +111,7 @@ todo_float.setup {
   target_file = '~/Developer/notes/todo.md',
 }
 
-vim.keymap.set('n', '<leader>td', ':Td<CR>', { silent = true })
+vim.keymap.set('n', '<leader>td', ':Td<CR>', { silent = true, desc = ' Open Todo Float' })
 
 vim.diagnostic.config { virtual_text = false }
 

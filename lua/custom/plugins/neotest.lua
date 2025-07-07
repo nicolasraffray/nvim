@@ -6,12 +6,21 @@ return {
     'nvim-neotest/neotest-plenary',
     'antoinemadec/FixCursorHold.nvim',
     'nvim-treesitter/nvim-treesitter',
+    'nvim-neotest/neotest-jest',
     'marilari88/neotest-vitest',
   },
   config = function()
     require('neotest').setup {
       adapters = {
         require 'neotest-plenary',
+        require 'neotest-jest' {
+          jestCommand = 'npm test -- --silent=false',
+          jestConfigFile = 'custom.jest.config.ts',
+          env = { CI = true },
+          cwd = function(path)
+            return vim.fn.getcwd()
+          end,
+        },
         require 'neotest-vitest' {
           filter_dir = function(name, rel_path, root)
             return name ~= 'node_modules'

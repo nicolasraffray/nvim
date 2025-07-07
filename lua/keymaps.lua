@@ -38,6 +38,7 @@ vim.keymap.set('n', '<leader>do', function()
 end, { desc = '[d]iagnostic [o]pen float' })
 
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Esc intert mode' })
+vim.keymap.set('n', '<leader>o', '<CMD>Oil<CR>', { desc = '💧  Oil nvim' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
