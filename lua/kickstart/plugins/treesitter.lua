@@ -9,6 +9,7 @@ return {
         'bash',
         'c',
         'c_sharp',
+        'sql',
         'diff',
         'html',
         'lua',
