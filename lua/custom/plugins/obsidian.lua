@@ -54,6 +54,11 @@ return {
         opts = { buffer = true, expr = true },
       },
     },
+    daily_notes = {
+      folder = 'daily',
+      date_format = '%Y-%m-%d',
+      default_tags = { 'daily' },
+    },
     picker = {
       -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
       name = 'telescope.nvim',
