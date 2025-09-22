@@ -22,6 +22,11 @@ return {
         'javascript',
         'typescript',
         'tsx',
+        'apex',
+        'soql',
+        'sosl',
+        'sflog',
+        'java',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -34,6 +39,20 @@ return {
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    init = function()
+      vim.filetype.add {
+        extension = {
+          cls = 'apexcode',
+          trigger = 'apexcode',
+          apex = 'apexcode',
+          soql = 'soql',
+          sosl = 'sosl',
+          sflog = 'sflog',
+        },
+      }
+
+      vim.treesitter.language.register('apex', 'apexcode')
+    end,
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
