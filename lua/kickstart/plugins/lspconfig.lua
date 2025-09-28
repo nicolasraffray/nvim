@@ -28,7 +28,7 @@ return {
       {
         'williamboman/mason.nvim',
         opts = {
-          ensure_installed = { 'tailwindcss-language-server', 'typescript-language-server', 'omnisharp', 'apex-language-server' },
+          ensure_installed = { 'tailwindcss-language-server', 'typescript-language-server', 'omnisharp', 'apex-language-server', 'gopls' },
         },
       },
       'williamboman/mason-lspconfig.nvim',
@@ -264,6 +264,17 @@ return {
           organize_imports_on_format = true,
           enable_decompilation_support = true,
           filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets', 'tproj', 'slngen', 'fproj' },
+        },
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+              },
+              staticcheck = true,
+              gofumpt = true,
+            },
+          },
         },
         apex_ls = {
           apex_jar_path = '/Users/nicolasraffray/.vscode/extensions/salesforce.salesforcedx-vscode-apex-64.13.1/dist/apex-jorje-lsp.jar',
