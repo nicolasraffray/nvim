@@ -31,6 +31,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 vim.keymap.set('n', '<leader>w', '<CMD>bd<CR>', { desc = 'Close Buffer' })
+vim.keymap.set('n', '<leader>d', '<CMD>bp|bd #<CR>', { desc = 'Close Buffer Keep Window' })
 vim.keymap.set('n', '<leader>n', '<CMD>bn<CR>', { desc = 'Next Buffer' })
 vim.keymap.set('n', '<leader>p', '<CMD>bp<CR>', { desc = 'Previous Buffer' })
 vim.keymap.set('n', '<leader>do', function()
