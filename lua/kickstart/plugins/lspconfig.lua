@@ -28,7 +28,15 @@ return {
       {
         'williamboman/mason.nvim',
         opts = {
-          ensure_installed = { 'tailwindcss-language-server', 'typescript-language-server', 'omnisharp', 'apex-language-server', 'gopls', 'clangd' },
+          ensure_installed = {
+            'tailwindcss-language-server',
+            'typescript-language-server',
+            'omnisharp',
+            'apex-language-server',
+            'gopls',
+            'clangd',
+            'neocmakelsp',
+          },
         },
       },
       'williamboman/mason-lspconfig.nvim',
@@ -252,6 +260,16 @@ return {
             '--clang-tidy', -- optional, for linting
             '--completion-style=detailed',
             '--compile-commands-dir=build',
+          },
+        },
+        neocmake = {
+          init_options = {
+            format = {
+              enable = true,
+            },
+            lint = {
+              enable = true,
+            },
           },
         },
         -- gopls = {},
