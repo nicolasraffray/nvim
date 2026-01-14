@@ -258,8 +258,11 @@ return {
             'clangd',
             '--background-index',
             '--clang-tidy', -- optional, for linting
+            '--clang-tidy-checks=*',
+            '--all-scopes-completion',
             '--completion-style=detailed',
             '--compile-commands-dir=build',
+            '--fallback-style=webkit',
           },
         },
         neocmake = {
@@ -303,7 +306,7 @@ return {
           },
         },
         apex_ls = {
-          apex_jar_path = '/Users/nicolasraffray/.vscode/extensions/salesforce.salesforcedx-vscode-apex-64.13.1/dist/apex-jorje-lsp.jar',
+          apex_jar_path = '/Users/nicolasraffray/.vscode/extensions/salesforce.salesforcedx-vscode-apex-65.6.0/dist/apex-jorje-lsp.jar',
           apex_enable_semantic_errors = true,
           apex_enable_completion_statistics = false,
           filetypes = { 'apexcode' },
