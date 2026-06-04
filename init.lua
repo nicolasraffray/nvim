@@ -93,6 +93,17 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- Disable builtin markdown treesitter parsers early (before any buffer loads)
+-- nvim 0.12.1 ships with broken builtin markdown parsers
+vim.g.ts_highlight_markdown = false
+vim.api.nvim_create_autocmd('BufReadPre', {
+  pattern = { '*.md', '*.markdown' },
+  callback = function(args)
+    vim.b[args.buf].ts_highlight = false
+    pcall(vim.treesitter.stop, args.buf)
+  end,
+})
+
 -- [[ Setting options ]]
 require 'options'
 

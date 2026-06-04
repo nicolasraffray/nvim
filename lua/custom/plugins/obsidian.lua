@@ -29,31 +29,8 @@ return {
       nvim_cmp = false,
       min_chars = 2,
     },
-    -- see below for full list of options 👇
-    mappings = {
-
-      -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-      ['gf'] = {
-        action = function()
-          return require('obsidian').util.gf_passthrough()
-        end,
-        opts = { noremap = false, expr = true, buffer = true },
-      },
-      -- Toggle check-boxes.
-      ['<leader>ch'] = {
-        action = function()
-          return require('obsidian').util.toggle_checkbox()
-        end,
-        opts = { buffer = true },
-      },
-      -- Smart action depending on context, either follow link or toggle checkbox.
-      ['<cr>'] = {
-        action = function()
-          return require('obsidian').util.smart_action()
-        end,
-        opts = { buffer = true, expr = true },
-      },
-    },
+    legacy_commands = false,
+    -- Keymaps are now set via autocmd - see below
     daily_notes = {
       folder = 'daily',
       date_format = '%Y-%m-%d',
@@ -78,4 +55,35 @@ return {
       },
     },
   },
+  config = function(_, opts)
+    require('obsidian').setup(opts)
+
+    -- Set up keymaps for obsidian (new approach)
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'markdown',
+      group = vim.api.nvim_create_augroup('ObsidianKeymaps', { clear = true }),
+      callback = function(ev)
+        -- Only apply in obsidian vault
+        local obsidian = require('obsidian').get_client()
+        if not obsidian then
+          return
+        end
+
+        -- Overrides 'gf' to work on markdown/wiki links
+        vim.keymap.set('n', 'gf', function()
+          return require('obsidian').util.gf_passthrough()
+        end, { noremap = false, expr = true, buffer = ev.buf, desc = 'Obsidian follow link' })
+
+        -- Toggle check-boxes
+        vim.keymap.set('n', '<leader>ch', function()
+          return require('obsidian').util.toggle_checkbox()
+        end, { buffer = ev.buf, desc = 'Obsidian toggle checkbox' })
+
+        -- Smart action depending on context
+        vim.keymap.set('n', '<cr>', function()
+          return require('obsidian').util.smart_action()
+        end, { buffer = ev.buf, expr = true, desc = 'Obsidian smart action' })
+      end,
+    })
+  end,
 }

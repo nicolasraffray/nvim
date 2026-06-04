@@ -334,32 +334,44 @@ return {
       --    :Mason
       --
       -- You can press `g?` for help in this menu.
-      --
-      -- `mason` had to be setup earlier: to configure its options see the
-      -- `dependencies` table for `nvim-lspconfig` above.
-      --
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      -- Use mason-lspconfig to handle LSP server installations (it knows the Mason package names)
+      local lsp_servers = vim.tbl_keys(servers or {})
+      -- Remove apex_ls since it's not a Mason package
+      lsp_servers = vim.tbl_filter(function(name)
+        return name ~= 'apex_ls'
+      end, lsp_servers)
 
       require('mason-lspconfig').setup {
-        ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+        ensure_installed = lsp_servers,
         automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
+      }
+
+      -- Use mason-tool-installer for non-LSP tools only
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          'stylua', -- Used to format Lua code
         },
       }
+
+      -- Configure LSP servers using nvim 0.11+ native API
+      -- Set global capabilities for all servers
+      vim.lsp.config('*', {
+        capabilities = capabilities,
+      })
+
+      -- Configure each server
+      for server_name, server_config in pairs(servers) do
+        -- Merge server-specific config with capabilities (already set globally, but server may override)
+        local config = vim.tbl_deep_extend('force', {}, server_config)
+        if config.capabilities then
+          config.capabilities = vim.tbl_deep_extend('force', capabilities, config.capabilities)
+        end
+        vim.lsp.config[server_name] = config
+      end
+
+      -- Enable all configured servers
+      vim.lsp.enable(vim.tbl_keys(servers))
     end,
   },
 }
